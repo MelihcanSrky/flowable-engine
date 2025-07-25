@@ -7,4 +7,4 @@ alter table ACT_RU_TASK add (
     SUSPENDED_BY_ NVARCHAR2(255), 
     IN_PROGRESS_DUE_DATE_ TIMESTAMP(6));
 
-update ACT_GE_PROPERTY set VALUE_ = '7.0.1.0' where NAME_ = 'task.schema.version';
+update ACT_GE_PROPERTY set VALUE_ = '7.0.0.0' where NAME_ = 'task.schema.version';
