@@ -11,7 +11,6 @@ alter table ACT_RE_PROCDEF alter column TENANT_ID_ set not null;
 alter table ACT_RE_PROCDEF alter column TENANT_ID_ set default '';
     
 alter table ACT_RE_PROCDEF
-    add constraint ACT_UNIQ_PROCDEF
     unique (KEY_,VERSION_, TENANT_ID_);
     
 alter table ACT_RU_VARIABLE

@@ -1,4 +1,4 @@
-create table ACT_RU_ENTITYLINK (
+create table if not exists ACT_RU_ENTITYLINK (
     ID_ varchar(64),
     REV_ integer,
     CREATE_TIME_ timestamp,
@@ -17,9 +17,13 @@ create table ACT_RU_ENTITYLINK (
     primary key (ID_)
 );
 
-create index ACT_IDX_ENT_LNK_SCOPE on ACT_RU_ENTITYLINK(SCOPE_ID_, SCOPE_TYPE_, LINK_TYPE_);
-create index ACT_IDX_ENT_LNK_REF_SCOPE on ACT_RU_ENTITYLINK(REF_SCOPE_ID_, REF_SCOPE_TYPE_, LINK_TYPE_);
-create index ACT_IDX_ENT_LNK_ROOT_SCOPE on ACT_RU_ENTITYLINK(ROOT_SCOPE_ID_, ROOT_SCOPE_TYPE_, LINK_TYPE_);
-create index ACT_IDX_ENT_LNK_SCOPE_DEF on ACT_RU_ENTITYLINK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_ENT_LNK_SCOPE on ACT_RU_ENTITYLINK(SCOPE_ID_, SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_ENT_LNK_REF_SCOPE on ACT_RU_ENTITYLINK(REF_SCOPE_ID_, REF_SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_ENT_LNK_ROOT_SCOPE on ACT_RU_ENTITYLINK(ROOT_SCOPE_ID_, ROOT_SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_ENT_LNK_SCOPE_DEF on ACT_RU_ENTITYLINK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_, LINK_TYPE_);
 
-insert into ACT_GE_PROPERTY values ('entitylink.schema.version', '7.0.1.1', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+SELECT 'entitylink.schema.version', '7.0.0.0', 1
+    WHERE NOT EXISTS (
+  SELECT 1 FROM ACT_GE_PROPERTY WHERE NAME_ = 'entitylink.schema.version'
+);

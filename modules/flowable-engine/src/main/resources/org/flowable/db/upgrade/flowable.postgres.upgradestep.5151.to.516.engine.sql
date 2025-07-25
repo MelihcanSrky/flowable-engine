@@ -4,7 +4,7 @@ alter table ACT_RU_TASK
 alter table ACT_RU_EXECUTION
 	add NAME_ varchar(255);
 
-create table ACT_EVT_LOG (
+create table if not exists ACT_EVT_LOG (
     LOG_NR_ SERIAL PRIMARY KEY,
     TYPE_ varchar(64),
     PROC_DEF_ID_ varchar(64),

@@ -1,4 +1,4 @@
-create table ACT_RU_VARIABLE (
+create table if not exists ACT_RU_VARIABLE (
     ID_ varchar(64) not null,
     REV_ integer,
     TYPE_ varchar(255) not null,
@@ -18,13 +18,20 @@ create table ACT_RU_VARIABLE (
     primary key (ID_)
 );
 
-create index ACT_IDX_RU_VAR_SCOPE_ID_TYPE on ACT_RU_VARIABLE(SCOPE_ID_, SCOPE_TYPE_);
-create index ACT_IDX_RU_VAR_SUB_ID_TYPE on ACT_RU_VARIABLE(SUB_SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_RU_VAR_SCOPE_ID_TYPE on ACT_RU_VARIABLE(SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_RU_VAR_SUB_ID_TYPE on ACT_RU_VARIABLE(SUB_SCOPE_ID_, SCOPE_TYPE_);
 
-create index ACT_IDX_VAR_BYTEARRAY on ACT_RU_VARIABLE(BYTEARRAY_ID_);
-alter table ACT_RU_VARIABLE 
+create index if not exists ACT_IDX_VAR_BYTEARRAY on ACT_RU_VARIABLE(BYTEARRAY_ID_);
+
+alter table ACT_RU_VARIABLE
+DROP constraint IF EXISTS ACT_FK_VAR_BYTEARRAY;
+alter table ACT_RU_VARIABLE
+    drop constraint if exists ACT_FK_VAR_BYTEARRAY;
+alter table ACT_RU_VARIABLE
     add constraint ACT_FK_VAR_BYTEARRAY 
     foreign key (BYTEARRAY_ID_) 
     references ACT_GE_BYTEARRAY (ID_);
 
-insert into ACT_GE_PROPERTY values ('variable.schema.version', '7.0.1.1', 1);
+insert into ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('variable.schema.version', '7.0.0.0', 1)
+ON CONFLICT (NAME_) DO NOTHING;;

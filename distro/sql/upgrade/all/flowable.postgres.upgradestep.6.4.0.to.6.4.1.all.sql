@@ -1,4 +1,4 @@
-create table ACT_HI_TSK_LOG (
+create table if not exists ACT_HI_TSK_LOG (
   ID_ SERIAL PRIMARY KEY,
   TYPE_ varchar(64),
   TASK_ID_ varchar(64) not null,
@@ -15,7 +15,7 @@ create table ACT_HI_TSK_LOG (
   TENANT_ID_ varchar(255) default ''
 );
 
-create table ACT_RU_ENTITYLINK (
+create table if not exists ACT_RU_ENTITYLINK (
     ID_ varchar(64),
     REV_ integer,
     CREATE_TIME_ timestamp,
@@ -30,10 +30,10 @@ create table ACT_RU_ENTITYLINK (
     primary key (ID_)
 );
 
-create index ACT_IDX_ENT_LNK_SCOPE on ACT_RU_ENTITYLINK(SCOPE_ID_, SCOPE_TYPE_, LINK_TYPE_);
-create index ACT_IDX_ENT_LNK_SCOPE_DEF on ACT_RU_ENTITYLINK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_ENT_LNK_SCOPE on ACT_RU_ENTITYLINK(SCOPE_ID_, SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_ENT_LNK_SCOPE_DEF on ACT_RU_ENTITYLINK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_, LINK_TYPE_);
 
-create table ACT_HI_ENTITYLINK (
+create table if not exists ACT_HI_ENTITYLINK (
     ID_ varchar(64),
     LINK_TYPE_ varchar(255),
     CREATE_TIME_ timestamp,
@@ -47,21 +47,24 @@ create table ACT_HI_ENTITYLINK (
     primary key (ID_)
 );
 
-create index ACT_IDX_HI_ENT_LNK_SCOPE on ACT_HI_ENTITYLINK(SCOPE_ID_, SCOPE_TYPE_, LINK_TYPE_);
-create index ACT_IDX_HI_ENT_LNK_SCOPE_DEF on ACT_HI_ENTITYLINK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_HI_ENT_LNK_SCOPE on ACT_HI_ENTITYLINK(SCOPE_ID_, SCOPE_TYPE_, LINK_TYPE_);
+create index if not exists ACT_IDX_HI_ENT_LNK_SCOPE_DEF on ACT_HI_ENTITYLINK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_, LINK_TYPE_);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'common.schema.version';
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'task.schema.version';
 
-insert into ACT_GE_PROPERTY values ('entitylink.schema.version', '6.4.1.3', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('entitylink.schema.version', '6.4.1.3', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'job.schema.version';
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'identitylink.schema.version';
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'variable.schema.version';
-create table ACT_RU_ACTINST (
+create table if not exists ACT_RU_ACTINST (
     ID_ varchar(64) not null,
     REV_ integer default 1,
     PROC_DEF_ID_ varchar(64) not null,
@@ -81,12 +84,12 @@ create table ACT_RU_ACTINST (
     primary key (ID_)
 );
 
-create index ACT_IDX_RU_ACTI_START on ACT_RU_ACTINST(START_TIME_);
-create index ACT_IDX_RU_ACTI_END on ACT_RU_ACTINST(END_TIME_);
-create index ACT_IDX_RU_ACTI_PROC on ACT_RU_ACTINST(PROC_INST_ID_);
-create index ACT_IDX_RU_ACTI_PROC_ACT on ACT_RU_ACTINST(PROC_INST_ID_, ACT_ID_);
-create index ACT_IDX_RU_ACTI_EXEC on ACT_RU_ACTINST(EXECUTION_ID_);
-create index ACT_IDX_RU_ACTI_EXEC_ACT on ACT_RU_ACTINST(EXECUTION_ID_, ACT_ID_);
+create index if not exists ACT_IDX_RU_ACTI_START on ACT_RU_ACTINST(START_TIME_);
+create index if not exists ACT_IDX_RU_ACTI_END on ACT_RU_ACTINST(END_TIME_);
+create index if not exists ACT_IDX_RU_ACTI_PROC on ACT_RU_ACTINST(PROC_INST_ID_);
+create index if not exists ACT_IDX_RU_ACTI_PROC_ACT on ACT_RU_ACTINST(PROC_INST_ID_, ACT_ID_);
+create index if not exists ACT_IDX_RU_ACTI_EXEC on ACT_RU_ACTINST(EXECUTION_ID_);
+create index if not exists ACT_IDX_RU_ACTI_EXEC_ACT on ACT_RU_ACTINST(EXECUTION_ID_, ACT_ID_);
 
 delete
 from ACT_RU_VARIABLE

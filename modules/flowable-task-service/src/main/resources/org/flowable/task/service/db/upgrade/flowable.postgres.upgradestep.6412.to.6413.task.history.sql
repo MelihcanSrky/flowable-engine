@@ -1,4 +1,4 @@
-create table ACT_HI_TSK_LOG (
+create table if not exists ACT_HI_TSK_LOG (
   ID_ SERIAL PRIMARY KEY,
   TYPE_ varchar(64),
   TASK_ID_ varchar(64) not null,

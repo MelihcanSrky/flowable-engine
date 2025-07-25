@@ -259,6 +259,9 @@ alter table ACT_RU_EXTERNAL_JOB
     foreign key (CUSTOM_VALUES_ID_)
     references ACT_GE_BYTEARRAY (ID_);
 
-insert into ACT_GE_PROPERTY values ('job.schema.version', '7.0.1.1', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('job.schema.version', '7.0.0.0', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+;
 
 -- force-commit

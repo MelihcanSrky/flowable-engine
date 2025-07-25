@@ -4,7 +4,7 @@ add DUE_DATE_ timestamp;
 alter table ACT_HI_TASKINST 
 add DUE_DATE_ timestamp;
 
-create table ACT_HI_COMMENT (
+create table if not exists ACT_HI_COMMENT (
     ID_ varchar(64) not null,
     TIME_ timestamp not null,
     USER_ID_ varchar(255),
@@ -14,7 +14,7 @@ create table ACT_HI_COMMENT (
     primary key (ID_)
 );
 
-create table ACT_HI_ATTACHMENT (
+create table if not exists ACT_HI_ATTACHMENT (
     ID_ varchar(64) not null,
     REV_ integer,
     NAME_ varchar(255),

@@ -54,7 +54,10 @@ public class UserBean {
 
         // First insert a record in the MY_TABLE table
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        int nrOfRows = jdbcTemplate.update("insert into MY_TABLE values ('test');");
+        int nrOfRows = jdbcTemplate.update("INSERT INTO MY_TABLE (NAME_, VALUE_, REV_)
+VALUES ('test')
+    ON CONFLICT (NAME_) DO NOTHING;
+;");
         if (nrOfRows != 1) {
             throw new RuntimeException("Insert into MY_TABLE failed");
         }

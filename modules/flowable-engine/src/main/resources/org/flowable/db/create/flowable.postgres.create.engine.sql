@@ -1,4 +1,4 @@
-create table ACT_RE_DEPLOYMENT (
+create table if not exists ACT_RE_DEPLOYMENT (
     ID_ varchar(64),
     NAME_ varchar(255),
     CATEGORY_ varchar(255),
@@ -12,7 +12,7 @@ create table ACT_RE_DEPLOYMENT (
     primary key (ID_)
 );
 
-create table ACT_RE_MODEL (
+create table if not exists ACT_RE_MODEL (
     ID_ varchar(64) not null,
     REV_ integer,
     NAME_ varchar(255),
@@ -29,7 +29,7 @@ create table ACT_RE_MODEL (
     primary key (ID_)
 );
 
-create table ACT_RU_EXECUTION (
+create table if not exists ACT_RU_EXECUTION (
     ID_ varchar(64),
     REV_ integer,
     PROC_INST_ID_ varchar(64),
@@ -72,7 +72,7 @@ create table ACT_RU_EXECUTION (
     primary key (ID_)
 );
 
-create table ACT_RE_PROCDEF (
+create table if not exists ACT_RE_PROCDEF (
     ID_ varchar(64) NOT NULL,
     REV_ integer,
     CATEGORY_ varchar(255),
@@ -94,7 +94,7 @@ create table ACT_RE_PROCDEF (
     primary key (ID_)
 );
 
-create table ACT_EVT_LOG (
+create table if not exists ACT_EVT_LOG (
     LOG_NR_ SERIAL PRIMARY KEY,
     TYPE_ varchar(64),
     PROC_DEF_ID_ varchar(64),
@@ -109,7 +109,7 @@ create table ACT_EVT_LOG (
     IS_PROCESSED_ smallint default 0
 );
 
-create table ACT_PROCDEF_INFO (
+create table if not exists ACT_PROCDEF_INFO (
 	ID_ varchar(64) not null,
     PROC_DEF_ID_ varchar(64) not null,
     REV_ integer,
@@ -117,7 +117,7 @@ create table ACT_PROCDEF_INFO (
     primary key (ID_)
 );
 
-create table ACT_RU_ACTINST (
+create table if not exists ACT_RU_ACTINST (
     ID_ varchar(64) not null,
     REV_ integer default 1,
     PROC_DEF_ID_ varchar(64) not null,
@@ -138,217 +138,313 @@ create table ACT_RU_ACTINST (
     primary key (ID_)
 );
 
-create index ACT_IDX_EXEC_BUSKEY on ACT_RU_EXECUTION(BUSINESS_KEY_);
-create index ACT_IDX_EXE_ROOT on ACT_RU_EXECUTION(ROOT_PROC_INST_ID_);
-create index ACT_IDX_EXEC_REF_ID_ on ACT_RU_EXECUTION(REFERENCE_ID_);
-create index ACT_IDX_VARIABLE_TASK_ID on ACT_RU_VARIABLE(TASK_ID_);
+create index if not exists ACT_IDX_EXEC_BUSKEY on ACT_RU_EXECUTION(BUSINESS_KEY_);
+create index if not exists ACT_IDX_EXE_ROOT on ACT_RU_EXECUTION(ROOT_PROC_INST_ID_);
+create index if not exists ACT_IDX_EXEC_REF_ID_ on ACT_RU_EXECUTION(REFERENCE_ID_);
+create index if not exists ACT_IDX_VARIABLE_TASK_ID on ACT_RU_VARIABLE(TASK_ID_);
 
-create index ACT_IDX_BYTEAR_DEPL on ACT_GE_BYTEARRAY(DEPLOYMENT_ID_);
+create index if not exists ACT_IDX_BYTEAR_DEPL on ACT_GE_BYTEARRAY(DEPLOYMENT_ID_);
 
-create index ACT_IDX_RU_ACTI_START on ACT_RU_ACTINST(START_TIME_);
-create index ACT_IDX_RU_ACTI_END on ACT_RU_ACTINST(END_TIME_);
-create index ACT_IDX_RU_ACTI_PROC on ACT_RU_ACTINST(PROC_INST_ID_);
-create index ACT_IDX_RU_ACTI_PROC_ACT on ACT_RU_ACTINST(PROC_INST_ID_, ACT_ID_);
-create index ACT_IDX_RU_ACTI_EXEC on ACT_RU_ACTINST(EXECUTION_ID_);
-create index ACT_IDX_RU_ACTI_EXEC_ACT on ACT_RU_ACTINST(EXECUTION_ID_, ACT_ID_);
-create index ACT_IDX_RU_ACTI_TASK on ACT_RU_ACTINST(TASK_ID_);
+create index if not exists ACT_IDX_RU_ACTI_START on ACT_RU_ACTINST(START_TIME_);
+create index if not exists ACT_IDX_RU_ACTI_END on ACT_RU_ACTINST(END_TIME_);
+create index if not exists ACT_IDX_RU_ACTI_PROC on ACT_RU_ACTINST(PROC_INST_ID_);
+create index if not exists ACT_IDX_RU_ACTI_PROC_ACT on ACT_RU_ACTINST(PROC_INST_ID_, ACT_ID_);
+create index if not exists ACT_IDX_RU_ACTI_EXEC on ACT_RU_ACTINST(EXECUTION_ID_);
+create index if not exists ACT_IDX_RU_ACTI_EXEC_ACT on ACT_RU_ACTINST(EXECUTION_ID_, ACT_ID_);
+create index if not exists ACT_IDX_RU_ACTI_TASK on ACT_RU_ACTINST(TASK_ID_);
 
+alter table ACT_GE_BYTEARRAY
+drop constraint if exists ACT_FK_BYTEARR_DEPL;
+alter table ACT_GE_BYTEARRAY
+    drop constraint if exists ACT_FK_BYTEARR_DEPL;
 alter table ACT_GE_BYTEARRAY
     add constraint ACT_FK_BYTEARR_DEPL
     foreign key (DEPLOYMENT_ID_) 
     references ACT_RE_DEPLOYMENT (ID_);
 
 alter table ACT_RE_PROCDEF
+drop constraint if exists ACT_UNIQ_PROCDEF;
+alter table ACT_RE_PROCDEF
+    drop constraint if exists ACT_UNIQ_PROCDEF;
+alter table ACT_RE_PROCDEF
     add constraint ACT_UNIQ_PROCDEF
     unique (KEY_,VERSION_, DERIVED_VERSION_, TENANT_ID_);
     
-create index ACT_IDX_EXE_PROCINST on ACT_RU_EXECUTION(PROC_INST_ID_);
+create index if not exists ACT_IDX_EXE_PROCINST on ACT_RU_EXECUTION(PROC_INST_ID_);
 alter table ACT_RU_EXECUTION
-    add constraint ACT_FK_EXE_PROCINST 
+    drop constraint if exists ACT_FK_EXE_PROCINST;
+alter table ACT_RU_EXECUTION
+    drop constraint if exists ACT_FK_EXE_PROCINST;
+alter table ACT_RU_EXECUTION
+    add constraint ACT_FK_EXE_PROCINST
     foreign key (PROC_INST_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_EXE_PARENT on ACT_RU_EXECUTION(PARENT_ID_);
+create index if not exists ACT_IDX_EXE_PARENT on ACT_RU_EXECUTION(PARENT_ID_);
+alter table ACT_RU_EXECUTION
+    drop constraint if exists ACT_FK_EXE_PARENT;
+alter table ACT_RU_EXECUTION
+    drop constraint if exists ACT_FK_EXE_PARENT;
 alter table ACT_RU_EXECUTION
     add constraint ACT_FK_EXE_PARENT
     foreign key (PARENT_ID_) 
     references ACT_RU_EXECUTION (ID_);
     
-create index ACT_IDX_EXE_SUPER on ACT_RU_EXECUTION(SUPER_EXEC_);
+create index if not exists ACT_IDX_EXE_SUPER on ACT_RU_EXECUTION(SUPER_EXEC_);
+alter table ACT_RU_EXECUTION
+    drop constraint if exists ACT_FK_EXE_SUPER;
+alter table ACT_RU_EXECUTION
+    drop constraint if exists ACT_FK_EXE_SUPER;
 alter table ACT_RU_EXECUTION
     add constraint ACT_FK_EXE_SUPER
     foreign key (SUPER_EXEC_) 
     references ACT_RU_EXECUTION (ID_);
     
 
-create index ACT_IDX_EXE_PROCDEF on ACT_RU_EXECUTION(PROC_DEF_ID_); 
+create index if not exists ACT_IDX_EXE_PROCDEF on ACT_RU_EXECUTION(PROC_DEF_ID_); 
 alter table ACT_RU_EXECUTION
-    add constraint ACT_FK_EXE_PROCDEF 
+    drop constraint if exists ACT_FK_EXE_PROCDEF;
+alter table ACT_RU_EXECUTION
+    drop constraint if exists ACT_FK_EXE_PROCDEF;
+alter table ACT_RU_EXECUTION
+    add constraint ACT_FK_EXE_PROCDEF
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);    
     
 
-create index ACT_IDX_TSKASS_TASK on ACT_RU_IDENTITYLINK(TASK_ID_);
+create index if not exists ACT_IDX_TSKASS_TASK on ACT_RU_IDENTITYLINK(TASK_ID_);
+alter table ACT_RU_IDENTITYLINK
+    drop constraint if exists ACT_FK_TSKASS_TASK;
+alter table ACT_RU_IDENTITYLINK
+    drop constraint if exists ACT_FK_TSKASS_TASK;
 alter table ACT_RU_IDENTITYLINK
     add constraint ACT_FK_TSKASS_TASK
     foreign key (TASK_ID_) 
     references ACT_RU_TASK (ID_);
     
-create index ACT_IDX_ATHRZ_PROCEDEF on ACT_RU_IDENTITYLINK(PROC_DEF_ID_);
+create index if not exists ACT_IDX_ATHRZ_PROCEDEF on ACT_RU_IDENTITYLINK(PROC_DEF_ID_);
+alter table ACT_RU_IDENTITYLINK
+    drop constraint if exists ACT_FK_ATHRZ_PROCEDEF;
+alter table ACT_RU_IDENTITYLINK
+    drop constraint if exists ACT_FK_ATHRZ_PROCEDEF;
 alter table ACT_RU_IDENTITYLINK
     add constraint ACT_FK_ATHRZ_PROCEDEF
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);
     
-create index ACT_IDX_IDL_PROCINST on ACT_RU_IDENTITYLINK(PROC_INST_ID_);
+create index if not exists ACT_IDX_IDL_PROCINST on ACT_RU_IDENTITYLINK(PROC_INST_ID_);
+alter table ACT_RU_IDENTITYLINK
+    drop constraint if exists ACT_FK_IDL_PROCINST;
+alter table ACT_RU_IDENTITYLINK
+    drop constraint if exists ACT_FK_IDL_PROCINST;
 alter table ACT_RU_IDENTITYLINK
     add constraint ACT_FK_IDL_PROCINST
     foreign key (PROC_INST_ID_) 
     references ACT_RU_EXECUTION (ID_);    
     
-create index ACT_IDX_TASK_EXEC on ACT_RU_TASK(EXECUTION_ID_);
+create index if not exists ACT_IDX_TASK_EXEC on ACT_RU_TASK(EXECUTION_ID_);
+alter table ACT_RU_TASK
+    drop constraint if exists ACT_FK_TASK_EXE;
+alter table ACT_RU_TASK
+    drop constraint if exists ACT_FK_TASK_EXE;
 alter table ACT_RU_TASK
     add constraint ACT_FK_TASK_EXE
     foreign key (EXECUTION_ID_)
     references ACT_RU_EXECUTION (ID_);
     
-create index ACT_IDX_TASK_PROCINST on ACT_RU_TASK(PROC_INST_ID_);
+create index if not exists ACT_IDX_TASK_PROCINST on ACT_RU_TASK(PROC_INST_ID_);
+alter table ACT_RU_TASK
+    drop constraint if exists ACT_FK_TASK_PROCINST;
+alter table ACT_RU_TASK
+    drop constraint if exists ACT_FK_TASK_PROCINST;
 alter table ACT_RU_TASK
     add constraint ACT_FK_TASK_PROCINST
     foreign key (PROC_INST_ID_)
     references ACT_RU_EXECUTION (ID_);
     
-create index ACT_IDX_TASK_PROCDEF on ACT_RU_TASK(PROC_DEF_ID_);
+create index if not exists ACT_IDX_TASK_PROCDEF on ACT_RU_TASK(PROC_DEF_ID_);
 alter table ACT_RU_TASK
-  add constraint ACT_FK_TASK_PROCDEF
+    drop constraint if exists ACT_FK_TASK_PROCDEF;
+alter table ACT_RU_TASK
+    drop constraint if exists ACT_FK_TASK_PROCDEF;
+alter table ACT_RU_TASK
+    add constraint ACT_FK_TASK_PROCDEF
   foreign key (PROC_DEF_ID_)
   references ACT_RE_PROCDEF (ID_);
   
-create index ACT_IDX_VAR_EXE on ACT_RU_VARIABLE(EXECUTION_ID_);
-alter table ACT_RU_VARIABLE 
+create index if not exists ACT_IDX_VAR_EXE on ACT_RU_VARIABLE(EXECUTION_ID_);
+alter table ACT_RU_VARIABLE
+    drop constraint if exists ACT_FK_VAR_EXE;
+alter table ACT_RU_VARIABLE
+    drop constraint if exists ACT_FK_VAR_EXE;
+alter table ACT_RU_VARIABLE
     add constraint ACT_FK_VAR_EXE
     foreign key (EXECUTION_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_VAR_PROCINST on ACT_RU_VARIABLE(PROC_INST_ID_);
+create index if not exists ACT_IDX_VAR_PROCINST on ACT_RU_VARIABLE(PROC_INST_ID_);
+alter table ACT_RU_VARIABLE
+    drop constraint if exists ACT_FK_VAR_PROCINST;
+alter table ACT_RU_VARIABLE
+    drop constraint if exists ACT_FK_VAR_PROCINST;
 alter table ACT_RU_VARIABLE
     add constraint ACT_FK_VAR_PROCINST
     foreign key (PROC_INST_ID_)
     references ACT_RU_EXECUTION(ID_);
 
-create index ACT_IDX_JOB_EXECUTION_ID on ACT_RU_JOB(EXECUTION_ID_);
-alter table ACT_RU_JOB 
+create index if not exists ACT_IDX_JOB_EXECUTION_ID on ACT_RU_JOB(EXECUTION_ID_);
+alter table ACT_RU_JOB
+    drop constraint if exists ACT_FK_JOB_EXECUTION;
+alter table ACT_RU_JOB
     add constraint ACT_FK_JOB_EXECUTION 
     foreign key (EXECUTION_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_JOB_PROCESS_INSTANCE_ID on ACT_RU_JOB(PROCESS_INSTANCE_ID_);
-alter table ACT_RU_JOB 
+create index if not exists ACT_IDX_JOB_PROCESS_INSTANCE_ID on ACT_RU_JOB(PROCESS_INSTANCE_ID_);
+alter table ACT_RU_JOB
+    drop constraint if exists ACT_FK_JOB_PROCESS_INSTANCE;
+alter table ACT_RU_JOB
     add constraint ACT_FK_JOB_PROCESS_INSTANCE 
     foreign key (PROCESS_INSTANCE_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_JOB_PROC_DEF_ID on ACT_RU_JOB(PROC_DEF_ID_);
-alter table ACT_RU_JOB 
+create index if not exists ACT_IDX_JOB_PROC_DEF_ID on ACT_RU_JOB(PROC_DEF_ID_);
+alter table ACT_RU_JOB
+    drop constraint if exists ACT_FK_JOB_PROC_DEF;
+alter table ACT_RU_JOB
     add constraint ACT_FK_JOB_PROC_DEF
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);
 
-create index ACT_IDX_TIMER_JOB_EXECUTION_ID on ACT_RU_TIMER_JOB(EXECUTION_ID_);
-alter table ACT_RU_TIMER_JOB 
+create index if not exists ACT_IDX_TIMER_JOB_EXECUTION_ID on ACT_RU_TIMER_JOB(EXECUTION_ID_);
+alter table ACT_RU_TIMER_JOB
+    drop constraint if exists ACT_FK_TIMER_JOB_EXECUTION;
+alter table ACT_RU_TIMER_JOB
     add constraint ACT_FK_TIMER_JOB_EXECUTION 
     foreign key (EXECUTION_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_TIMER_JOB_PROCESS_INSTANCE_ID on ACT_RU_TIMER_JOB(PROCESS_INSTANCE_ID_);
-alter table ACT_RU_TIMER_JOB 
+create index if not exists ACT_IDX_TIMER_JOB_PROCESS_INSTANCE_ID on ACT_RU_TIMER_JOB(PROCESS_INSTANCE_ID_);
+alter table ACT_RU_TIMER_JOB
+    drop constraint if exists ACT_FK_TIMER_JOB_PROCESS_INSTANCE;
+alter table ACT_RU_TIMER_JOB
     add constraint ACT_FK_TIMER_JOB_PROCESS_INSTANCE 
     foreign key (PROCESS_INSTANCE_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_TIMER_JOB_PROC_DEF_ID on ACT_RU_TIMER_JOB(PROC_DEF_ID_);
-alter table ACT_RU_TIMER_JOB 
+create index if not exists ACT_IDX_TIMER_JOB_PROC_DEF_ID on ACT_RU_TIMER_JOB(PROC_DEF_ID_);
+alter table ACT_RU_TIMER_JOB
+    drop constraint if exists ACT_FK_TIMER_JOB_PROC_DEF;
+alter table ACT_RU_TIMER_JOB
     add constraint ACT_FK_TIMER_JOB_PROC_DEF
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);
 
-create index ACT_IDX_SUSPENDED_JOB_EXECUTION_ID on ACT_RU_SUSPENDED_JOB(EXECUTION_ID_);    
-alter table ACT_RU_SUSPENDED_JOB 
+create index if not exists ACT_IDX_SUSPENDED_JOB_EXECUTION_ID on ACT_RU_SUSPENDED_JOB(EXECUTION_ID_);    
+alter table ACT_RU_SUSPENDED_JOB
+    drop constraint if exists ACT_FK_SUSPENDED_JOB_EXECUTION;
+alter table ACT_RU_SUSPENDED_JOB
     add constraint ACT_FK_SUSPENDED_JOB_EXECUTION 
     foreign key (EXECUTION_ID_) 
     references ACT_RU_EXECUTION (ID_);
     
-create index ACT_IDX_SUSPENDED_JOB_PROCESS_INSTANCE_ID on ACT_RU_SUSPENDED_JOB(PROCESS_INSTANCE_ID_);    
-alter table ACT_RU_SUSPENDED_JOB 
+create index if not exists ACT_IDX_SUSPENDED_JOB_PROCESS_INSTANCE_ID on ACT_RU_SUSPENDED_JOB(PROCESS_INSTANCE_ID_);    
+alter table ACT_RU_SUSPENDED_JOB
+    drop constraint if exists ACT_FK_SUSPENDED_JOB_PROCESS_INSTANCE;
+alter table ACT_RU_SUSPENDED_JOB
     add constraint ACT_FK_SUSPENDED_JOB_PROCESS_INSTANCE 
     foreign key (PROCESS_INSTANCE_ID_) 
     references ACT_RU_EXECUTION (ID_);
 
-create index ACT_IDX_SUSPENDED_JOB_PROC_DEF_ID on ACT_RU_SUSPENDED_JOB(PROC_DEF_ID_);    
-alter table ACT_RU_SUSPENDED_JOB 
+create index if not exists ACT_IDX_SUSPENDED_JOB_PROC_DEF_ID on ACT_RU_SUSPENDED_JOB(PROC_DEF_ID_);    
+alter table ACT_RU_SUSPENDED_JOB
+    drop constraint if exists ACT_FK_SUSPENDED_JOB_PROC_DEF;
+alter table ACT_RU_SUSPENDED_JOB
     add constraint ACT_FK_SUSPENDED_JOB_PROC_DEF
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);
 
-create index ACT_IDX_DEADLETTER_JOB_EXECUTION_ID on ACT_RU_DEADLETTER_JOB(EXECUTION_ID_);      
-alter table ACT_RU_DEADLETTER_JOB 
+create index if not exists ACT_IDX_DEADLETTER_JOB_EXECUTION_ID on ACT_RU_DEADLETTER_JOB(EXECUTION_ID_);      
+alter table ACT_RU_DEADLETTER_JOB
+    drop constraint if exists ACT_FK_DEADLETTER_JOB_EXECUTION;
+alter table ACT_RU_DEADLETTER_JOB
     add constraint ACT_FK_DEADLETTER_JOB_EXECUTION 
     foreign key (EXECUTION_ID_) 
     references ACT_RU_EXECUTION (ID_);
  
-create index ACT_IDX_DEADLETTER_JOB_PROCESS_INSTANCE_ID on ACT_RU_DEADLETTER_JOB(PROCESS_INSTANCE_ID_);        
-alter table ACT_RU_DEADLETTER_JOB 
+create index if not exists ACT_IDX_DEADLETTER_JOB_PROCESS_INSTANCE_ID on ACT_RU_DEADLETTER_JOB(PROCESS_INSTANCE_ID_);        
+alter table ACT_RU_DEADLETTER_JOB
+    drop constraint if exists ACT_FK_DEADLETTER_JOB_PROCESS_INSTANCE;
+alter table ACT_RU_DEADLETTER_JOB
     add constraint ACT_FK_DEADLETTER_JOB_PROCESS_INSTANCE 
     foreign key (PROCESS_INSTANCE_ID_) 
     references ACT_RU_EXECUTION (ID_);
     
-create index ACT_IDX_DEADLETTER_JOB_PROC_DEF_ID on ACT_RU_DEADLETTER_JOB(PROC_DEF_ID_);    
-alter table ACT_RU_DEADLETTER_JOB 
+create index if not exists ACT_IDX_DEADLETTER_JOB_PROC_DEF_ID on ACT_RU_DEADLETTER_JOB(PROC_DEF_ID_);    
+alter table ACT_RU_DEADLETTER_JOB
+    drop constraint if exists ACT_FK_DEADLETTER_JOB_PROC_DEF;
+alter table ACT_RU_DEADLETTER_JOB
     add constraint ACT_FK_DEADLETTER_JOB_PROC_DEF
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);
     
 alter table ACT_RU_EVENT_SUBSCR
+    drop constraint if exists ACT_FK_EVENT_EXEC;
+alter table ACT_RU_EVENT_SUBSCR
     add constraint ACT_FK_EVENT_EXEC
     foreign key (EXECUTION_ID_)
     references ACT_RU_EXECUTION(ID_);
 
-create index ACT_IDX_MODEL_SOURCE on ACT_RE_MODEL(EDITOR_SOURCE_VALUE_ID_);
-alter table ACT_RE_MODEL 
+create index if not exists ACT_IDX_MODEL_SOURCE on ACT_RE_MODEL(EDITOR_SOURCE_VALUE_ID_);
+alter table ACT_RE_MODEL
+    drop constraint if exists ACT_FK_MODEL_SOURCE;
+alter table ACT_RE_MODEL
     add constraint ACT_FK_MODEL_SOURCE 
     foreign key (EDITOR_SOURCE_VALUE_ID_) 
     references ACT_GE_BYTEARRAY (ID_);
 
-create index ACT_IDX_MODEL_SOURCE_EXTRA on ACT_RE_MODEL(EDITOR_SOURCE_EXTRA_VALUE_ID_);
-alter table ACT_RE_MODEL 
+create index if not exists ACT_IDX_MODEL_SOURCE_EXTRA on ACT_RE_MODEL(EDITOR_SOURCE_EXTRA_VALUE_ID_);
+alter table ACT_RE_MODEL
+    drop constraint if exists ACT_FK_MODEL_SOURCE_EXTRA;
+alter table ACT_RE_MODEL
     add constraint ACT_FK_MODEL_SOURCE_EXTRA 
     foreign key (EDITOR_SOURCE_EXTRA_VALUE_ID_) 
     references ACT_GE_BYTEARRAY (ID_);
     
-create index ACT_IDX_MODEL_DEPLOYMENT on ACT_RE_MODEL(DEPLOYMENT_ID_);    
-alter table ACT_RE_MODEL 
+create index if not exists ACT_IDX_MODEL_DEPLOYMENT on ACT_RE_MODEL(DEPLOYMENT_ID_);    
+alter table ACT_RE_MODEL
+    drop constraint if exists ACT_FK_MODEL_DEPLOYMENT;
+alter table ACT_RE_MODEL
     add constraint ACT_FK_MODEL_DEPLOYMENT 
     foreign key (DEPLOYMENT_ID_) 
     references ACT_RE_DEPLOYMENT (ID_);        
 
-create index ACT_IDX_PROCDEF_INFO_JSON on ACT_PROCDEF_INFO(INFO_JSON_ID_);
-alter table ACT_PROCDEF_INFO 
+create index if not exists ACT_IDX_PROCDEF_INFO_JSON on ACT_PROCDEF_INFO(INFO_JSON_ID_);
+alter table ACT_PROCDEF_INFO
+    drop constraint if exists ACT_FK_INFO_JSON_BA;
+alter table ACT_PROCDEF_INFO
     add constraint ACT_FK_INFO_JSON_BA 
     foreign key (INFO_JSON_ID_) 
     references ACT_GE_BYTEARRAY (ID_);
 
-create index ACT_IDX_PROCDEF_INFO_PROC on ACT_PROCDEF_INFO(PROC_DEF_ID_);
-alter table ACT_PROCDEF_INFO 
+create index if not exists ACT_IDX_PROCDEF_INFO_PROC on ACT_PROCDEF_INFO(PROC_DEF_ID_);
+alter table ACT_PROCDEF_INFO
+    drop constraint if exists ACT_FK_INFO_PROCDEF;
+alter table ACT_PROCDEF_INFO
     add constraint ACT_FK_INFO_PROCDEF 
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);
     
 alter table ACT_PROCDEF_INFO
+    drop constraint if exists ACT_UNIQ_INFO_PROCDEF;
+alter table ACT_PROCDEF_INFO
     add constraint ACT_UNIQ_INFO_PROCDEF
     unique (PROC_DEF_ID_);
 
-insert into ACT_GE_PROPERTY
-values ('schema.version', '7.0.1.1', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('schema.version', '7.0.0.0', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
 
-insert into ACT_GE_PROPERTY
-values ('schema.history', 'create(7.0.1.1)', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('schema.history', 'create(7.0.0.0)', 1)
+    ON CONFLICT (NAME_) DO NOTHING;

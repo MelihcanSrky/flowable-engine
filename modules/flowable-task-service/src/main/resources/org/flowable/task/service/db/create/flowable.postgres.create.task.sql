@@ -1,4 +1,4 @@
-create table ACT_RU_TASK (
+create table if not exists ACT_RU_TASK (
     ID_ varchar(64),
     REV_ integer,
     EXECUTION_ID_ varchar(64),
@@ -39,9 +39,12 @@ create table ACT_RU_TASK (
     primary key (ID_)
 );
 
-create index ACT_IDX_TASK_CREATE on ACT_RU_TASK(CREATE_TIME_);
-create index ACT_IDX_TASK_SCOPE on ACT_RU_TASK(SCOPE_ID_, SCOPE_TYPE_);
-create index ACT_IDX_TASK_SUB_SCOPE on ACT_RU_TASK(SUB_SCOPE_ID_, SCOPE_TYPE_);
-create index ACT_IDX_TASK_SCOPE_DEF on ACT_RU_TASK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_TASK_CREATE on ACT_RU_TASK(CREATE_TIME_);
+create index if not exists ACT_IDX_TASK_SCOPE on ACT_RU_TASK(SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_TASK_SUB_SCOPE on ACT_RU_TASK(SUB_SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_TASK_SCOPE_DEF on ACT_RU_TASK(SCOPE_DEFINITION_ID_, SCOPE_TYPE_);
 
-insert into ACT_GE_PROPERTY values ('task.schema.version', '7.0.1.1', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('task.schema.version', '7.0.0.0', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+

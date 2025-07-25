@@ -1,1 +1,4 @@
-insert into ACT_GE_PROPERTY values ('common.schema.version', '6.2.0.0', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('common.schema.version', '6.2.0.0', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+;

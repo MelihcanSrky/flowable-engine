@@ -77,7 +77,7 @@
         <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
       </cmmndi:CMMNEdge>
       <cmmndi:CMMNEdge id="CMMNEdge_sid-CDCD6B4C-6220-4D3A-BB67-3D826E1E6ACB" cmmnElementRef="sid-3CCC6FDD-114B-4D16-A462-914B678809A4" targetCMMNElementRef="planItem4">
-        <di:waypoint x="244.01732512098178" y="269.3790811187048"></di:waypoint>
+        <di:waypoint x="244.01732512098178" y="269.37.0.0.087048"></di:waypoint>
         <di:waypoint x="307.1751069222908" y="168.14791785670133"></di:waypoint>
         <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
       </cmmndi:CMMNEdge>

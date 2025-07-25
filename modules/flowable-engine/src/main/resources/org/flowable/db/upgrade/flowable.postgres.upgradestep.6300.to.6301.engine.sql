@@ -7,7 +7,11 @@ alter table ACT_RE_PROCDEF add column DERIVED_VERSION_ integer not null default 
 
 alter table ACT_RE_PROCDEF
     drop constraint ACT_UNIQ_PROCDEF;
-    
+
+alter table ACT_RE_PROCDEF
+drop constraint if exists ACT_UNIQ_PROCDEF;
+alter table ACT_RE_PROCDEF
+    drop constraint if exists ACT_UNIQ_PROCDEF;
 alter table ACT_RE_PROCDEF
     add constraint ACT_UNIQ_PROCDEF
     unique (KEY_,VERSION_, DERIVED_VERSION_, TENANT_ID_);

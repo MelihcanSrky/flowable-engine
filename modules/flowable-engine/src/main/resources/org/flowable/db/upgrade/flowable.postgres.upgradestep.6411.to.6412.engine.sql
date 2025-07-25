@@ -1,4 +1,4 @@
-create table ACT_RU_ACTINST (
+create table if not exists ACT_RU_ACTINST (
     ID_ varchar(64) not null,
     REV_ integer default 1,
     PROC_DEF_ID_ varchar(64) not null,
@@ -18,11 +18,11 @@ create table ACT_RU_ACTINST (
     primary key (ID_)
 );
 
-create index ACT_IDX_RU_ACTI_START on ACT_RU_ACTINST(START_TIME_);
-create index ACT_IDX_RU_ACTI_END on ACT_RU_ACTINST(END_TIME_);
-create index ACT_IDX_RU_ACTI_PROC on ACT_RU_ACTINST(PROC_INST_ID_);
-create index ACT_IDX_RU_ACTI_PROC_ACT on ACT_RU_ACTINST(PROC_INST_ID_, ACT_ID_);
-create index ACT_IDX_RU_ACTI_EXEC on ACT_RU_ACTINST(EXECUTION_ID_);
-create index ACT_IDX_RU_ACTI_EXEC_ACT on ACT_RU_ACTINST(EXECUTION_ID_, ACT_ID_);
+create index if not exists ACT_IDX_RU_ACTI_START on ACT_RU_ACTINST(START_TIME_);
+create index if not exists ACT_IDX_RU_ACTI_END on ACT_RU_ACTINST(END_TIME_);
+create index if not exists ACT_IDX_RU_ACTI_PROC on ACT_RU_ACTINST(PROC_INST_ID_);
+create index if not exists ACT_IDX_RU_ACTI_PROC_ACT on ACT_RU_ACTINST(PROC_INST_ID_, ACT_ID_);
+create index if not exists ACT_IDX_RU_ACTI_EXEC on ACT_RU_ACTINST(EXECUTION_ID_);
+create index if not exists ACT_IDX_RU_ACTI_EXEC_ACT on ACT_RU_ACTINST(EXECUTION_ID_, ACT_ID_);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.2' where NAME_ = 'schema.version';

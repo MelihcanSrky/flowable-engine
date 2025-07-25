@@ -55,7 +55,10 @@ update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'common.schema.versi
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'task.schema.version';
 
-insert into ACT_GE_PROPERTY values ('entitylink.schema.version', '6.4.1.3', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('entitylink.schema.version', '6.4.1.3', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+;
 
 update ACT_GE_PROPERTY set VALUE_ = '6.4.1.3' where NAME_ = 'job.schema.version';
 

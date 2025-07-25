@@ -4,7 +4,7 @@ update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'entitylink.schema.v
 
 update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'identitylink.schema.version';
 
-create index ACT_IDX_TIMER_JOB_DUEDATE on ACT_RU_TIMER_JOB(DUEDATE_);
+create index if not exists ACT_IDX_TIMER_JOB_DUEDATE on ACT_RU_TIMER_JOB(DUEDATE_);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'job.schema.version';
 
@@ -17,8 +17,8 @@ update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'variable.schema.ver
 update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'eventsubscription.schema.version';
 alter table ACT_HI_PROCINST add column PROPAGATED_STAGE_INST_ID_ varchar(255);
 
-create index ACT_IDX_EXEC_REF_ID_ on ACT_RU_EXECUTION(REFERENCE_ID_);
-create index ACT_IDX_RU_ACTI_TASK on ACT_RU_ACTINST(TASK_ID_);
+create index if not exists ACT_IDX_EXEC_REF_ID_ on ACT_RU_EXECUTION(REFERENCE_ID_);
+create index if not exists ACT_IDX_RU_ACTI_TASK on ACT_RU_ACTINST(TASK_ID_);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'schema.version';
 update ACT_ID_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'schema.version';
@@ -51,11 +51,11 @@ UPDATE act_dmn_databasechangeloglock SET LOCKED = FALSE, LOCKEDBY = NULL, LOCKGR
 
 UPDATE act_fo_databasechangeloglock SET LOCKED = TRUE, LOCKEDBY = '192.168.10.1 (192.168.10.1)', LOCKGRANTED = '2021-08-30 14:10:29.537' WHERE ID = 1 AND LOCKED = FALSE;
 
-CREATE INDEX ACT_IDX_FORM_TASK ON ACT_FO_FORM_INSTANCE(TASK_ID_);
+create index if not exists ACT_IDX_FORM_TASK ON ACT_FO_FORM_INSTANCE(TASK_ID_);
 
-CREATE INDEX ACT_IDX_FORM_PROC ON ACT_FO_FORM_INSTANCE(PROC_INST_ID_);
+create index if not exists ACT_IDX_FORM_PROC ON ACT_FO_FORM_INSTANCE(PROC_INST_ID_);
 
-CREATE INDEX ACT_IDX_FORM_SCOPE ON ACT_FO_FORM_INSTANCE(SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_FORM_SCOPE ON ACT_FO_FORM_INSTANCE(SCOPE_ID_, SCOPE_TYPE_);
 
 INSERT INTO act_fo_databasechangelog (ID, AUTHOR, FILENAME, DATEEXECUTED, ORDEREXECUTED, MD5SUM, DESCRIPTION, COMMENTS, EXECTYPE, CONTEXTS, LABELS, LIQUIBASE, DEPLOYMENT_ID) VALUES ('6', 'flowable', 'org/flowable/form/db/liquibase/flowable-form-db-changelog.xml', NOW(), 5, '8:384bbd364a649b67c3ca1bcb72fe537f', 'createIndex indexName=ACT_IDX_FORM_TASK, tableName=ACT_FO_FORM_INSTANCE; createIndex indexName=ACT_IDX_FORM_PROC, tableName=ACT_FO_FORM_INSTANCE; createIndex indexName=ACT_IDX_FORM_SCOPE, tableName=ACT_FO_FORM_INSTANCE', '', 'EXECUTED', NULL, NULL, '4.3.5', '0325429650');
 

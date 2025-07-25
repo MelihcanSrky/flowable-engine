@@ -1,4 +1,4 @@
-create table ACT_RU_EVENT_SUBSCR (
+create table if not exists ACT_RU_EVENT_SUBSCR (
     ID_ varchar(64) not null,
     REV_ integer,
     EVENT_TYPE_ varchar(255) not null,
@@ -20,8 +20,11 @@ create table ACT_RU_EVENT_SUBSCR (
     primary key (ID_)
 );
 
-create index ACT_IDX_EVENT_SUBSCR_CONFIG_ on ACT_RU_EVENT_SUBSCR(CONFIGURATION_);
-create index ACT_IDX_EVENT_SUBSCR on ACT_RU_EVENT_SUBSCR(EXECUTION_ID_);
-create index ACT_IDX_EVENT_SUBSCR_SCOPEREF_ on ACT_RU_EVENT_SUBSCR(SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_EVENT_SUBSCR_CONFIG_ on ACT_RU_EVENT_SUBSCR(CONFIGURATION_);
+create index if not exists ACT_IDX_EVENT_SUBSCR on ACT_RU_EVENT_SUBSCR(EXECUTION_ID_);
+create index if not exists ACT_IDX_EVENT_SUBSCR_SCOPEREF_ on ACT_RU_EVENT_SUBSCR(SCOPE_ID_, SCOPE_TYPE_);
 
-insert into ACT_GE_PROPERTY values ('eventsubscription.schema.version', '7.0.1.1', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('eventsubscription.schema.version', '7.0.0.0', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+

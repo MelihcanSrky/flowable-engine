@@ -1,4 +1,4 @@
-create index ACT_IDX_HI_PROCVAR_EXE on ACT_HI_VARINST(EXECUTION_ID_);
+create index if not exists ACT_IDX_HI_PROCVAR_EXE on ACT_HI_VARINST(EXECUTION_ID_);
 
 alter table ACT_HI_PROCINST add column REV_ integer default 1;
 update ACT_HI_PROCINST set REV_ = 1;

@@ -1,4 +1,4 @@
-create table ACT_HI_TASKINST (
+create table if not exists ACT_HI_TASKINST (
     ID_ varchar(64) not null,
     PROC_DEF_ID_ varchar(64),
     TASK_DEF_KEY_ varchar(255),

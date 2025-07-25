@@ -1,4 +1,4 @@
-create table FLW_RU_BATCH (
+create table if not exists FLW_RU_BATCH (
     ID_ varchar(64) not null,
     REV_ integer,
     TYPE_ varchar(64) not null,
@@ -12,7 +12,7 @@ create table FLW_RU_BATCH (
     primary key (ID_)
 );
 
-create table FLW_RU_BATCH_PART (
+create table if not exists FLW_RU_BATCH_PART (
     ID_ varchar(64) not null,
     REV_ integer,
     BATCH_ID_ varchar(64),
@@ -30,11 +30,16 @@ create table FLW_RU_BATCH_PART (
     primary key (ID_)
 );
 
-create index FLW_IDX_BATCH_PART on FLW_RU_BATCH_PART(BATCH_ID_);
+create index if not exists FLW_IDX_BATCH_PART on FLW_RU_BATCH_PART(BATCH_ID_);
 
+alter table FLW_RU_BATCH_PART
+    drop constraint if exists FLW_FK_BATCH_PART_PARENT;
 alter table FLW_RU_BATCH_PART
     add constraint FLW_FK_BATCH_PART_PARENT
     foreign key (BATCH_ID_)
     references FLW_RU_BATCH (ID_);
 
-insert into ACT_GE_PROPERTY values ('batch.schema.version', '7.0.1.1', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('batch.schema.version', '7.0.0.0', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+

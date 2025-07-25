@@ -1,4 +1,4 @@
-create table ACT_RU_EXTERNAL_JOB (
+create table if not exists ACT_RU_EXTERNAL_JOB (
     ID_ varchar(64) NOT NULL,
     REV_ integer,
     CATEGORY_ varchar(255),
@@ -28,21 +28,25 @@ create table ACT_RU_EXTERNAL_JOB (
     primary key (ID_)
 );
 
-create index ACT_IDX_EXTERNAL_JOB_EXCEPTION_STACK_ID on ACT_RU_EXTERNAL_JOB(EXCEPTION_STACK_ID_);
-create index ACT_IDX_EXTERNAL_JOB_CUSTOM_VALUES_ID on ACT_RU_EXTERNAL_JOB(CUSTOM_VALUES_ID_);
+create index if not exists ACT_IDX_EXTERNAL_JOB_EXCEPTION_STACK_ID on ACT_RU_EXTERNAL_JOB(EXCEPTION_STACK_ID_);
+create index if not exists ACT_IDX_EXTERNAL_JOB_CUSTOM_VALUES_ID on ACT_RU_EXTERNAL_JOB(CUSTOM_VALUES_ID_);
 
+alter table ACT_RU_EXTERNAL_JOB
+    drop constraint if exists ACT_FK_EXTERNAL_JOB_EXCEPTION;
 alter table ACT_RU_EXTERNAL_JOB
     add constraint ACT_FK_EXTERNAL_JOB_EXCEPTION
     foreign key (EXCEPTION_STACK_ID_)
     references ACT_GE_BYTEARRAY (ID_);
 
 alter table ACT_RU_EXTERNAL_JOB
+    drop constraint if exists ACT_FK_EXTERNAL_JOB_CUSTOM_VALUES;
+alter table ACT_RU_EXTERNAL_JOB
     add constraint ACT_FK_EXTERNAL_JOB_CUSTOM_VALUES
     foreign key (CUSTOM_VALUES_ID_)
     references ACT_GE_BYTEARRAY (ID_);
 
-create index ACT_IDX_EJOB_SCOPE on ACT_RU_EXTERNAL_JOB(SCOPE_ID_, SCOPE_TYPE_);
-create index ACT_IDX_EJOB_SUB_SCOPE on ACT_RU_EXTERNAL_JOB(SUB_SCOPE_ID_, SCOPE_TYPE_);
-create index ACT_IDX_EJOB_SCOPE_DEF on ACT_RU_EXTERNAL_JOB(SCOPE_DEFINITION_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_EJOB_SCOPE on ACT_RU_EXTERNAL_JOB(SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_EJOB_SUB_SCOPE on ACT_RU_EXTERNAL_JOB(SUB_SCOPE_ID_, SCOPE_TYPE_);
+create index if not exists ACT_IDX_EJOB_SCOPE_DEF on ACT_RU_EXTERNAL_JOB(SCOPE_DEFINITION_ID_, SCOPE_TYPE_);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.5.1.3' where NAME_ = 'job.schema.version';

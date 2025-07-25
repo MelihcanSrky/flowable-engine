@@ -1,7 +1,7 @@
 alter table ACT_ID_USER 
 add PICTURE_ID_ varchar(64);
 
-create table ACT_ID_INFO (
+create table if not exists ACT_ID_INFO (
     ID_ varchar(64),
     REV_ integer,
     USER_ID_ varchar(64),

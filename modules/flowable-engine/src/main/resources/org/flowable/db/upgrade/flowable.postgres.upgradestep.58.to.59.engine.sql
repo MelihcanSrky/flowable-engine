@@ -15,7 +15,7 @@ update ACT_RU_EXECUTION set SUSPENSION_STATE_ = 1;
 
 
 
-create table ACT_RU_EVENT_SUBSCR (
+create table if not exists ACT_RU_EVENT_SUBSCR (
     ID_ varchar(64) not null,
     REV_ integer,
     EVENT_TYPE_ varchar(255) not null,
@@ -28,9 +28,11 @@ create table ACT_RU_EVENT_SUBSCR (
     primary key (ID_)
 );
 
-create index ACT_IDX_EVENT_SUBSCR_CONFIG_ on ACT_RU_EVENT_SUBSCR(CONFIGURATION_);
+create index if not exists ACT_IDX_EVENT_SUBSCR_CONFIG_ on ACT_RU_EVENT_SUBSCR(CONFIGURATION_);
 
-create index ACT_IDX_EVENT_SUBSCR on ACT_RU_EVENT_SUBSCR(EXECUTION_ID_);
+create index if not exists ACT_IDX_EVENT_SUBSCR on ACT_RU_EVENT_SUBSCR(EXECUTION_ID_);
+alter table ACT_RU_EVENT_SUBSCR
+    drop constraint if exists ACT_FK_EVENT_EXEC;
 alter table ACT_RU_EVENT_SUBSCR
     add constraint ACT_FK_EVENT_EXEC
     foreign key (EXECUTION_ID_)
@@ -53,7 +55,9 @@ add DELETE_REASON_ varchar(4000);
 
 
 
-alter table ACT_GE_BYTEARRAY 
+alter table ACT_GE_BYTEARRAY
+drop constraint if exists ACT_FK_BYTEARR_DEPL;
+alter table ACT_GE_BYTEARRAY
 add GENERATED_ boolean;
 
 update ACT_GE_BYTEARRAY set GENERATED_ = false;

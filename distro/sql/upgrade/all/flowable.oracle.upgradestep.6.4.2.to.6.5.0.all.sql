@@ -53,7 +53,10 @@ alter table FLW_RU_BATCH_PART
     foreign key (BATCH_ID_)
     references FLW_RU_BATCH (ID_);
 
-insert into ACT_GE_PROPERTY values ('batch.schema.version', '6.5.0.6', 1);
+INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_)
+VALUES ('batch.schema.version', '6.5.0.6', 1)
+    ON CONFLICT (NAME_) DO NOTHING;
+;
 
 alter table ACT_HI_TASKINST add PROPAGATED_STAGE_INST_ID_ NVARCHAR2(255);
 

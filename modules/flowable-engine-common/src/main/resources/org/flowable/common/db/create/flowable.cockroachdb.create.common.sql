@@ -1,11 +1,11 @@
-CREATE TABLE if not exists ACT_GE_PROPERTY  (
+create table ACT_GE_PROPERTY  (
     NAME_ varchar(64),
     VALUE_ varchar(300),
     REV_ integer,
     primary key (NAME_)
 );
 
-CREATE TABLE if not exists ACT_GE_BYTEARRAY  (
+create table ACT_GE_BYTEARRAY  (
     ID_ varchar(64),
     REV_ integer,
     NAME_ varchar(255),
@@ -16,7 +16,7 @@ CREATE TABLE if not exists ACT_GE_BYTEARRAY  (
 );
 
 insert into ACT_GE_PROPERTY
-values ('common.schema.version', '7.0.1.1', 1);
+values ('common.schema.version', '7.0.0.0', 1);
 
 insert into ACT_GE_PROPERTY
 values ('next.dbid', '1', 1);

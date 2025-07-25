@@ -1,4 +1,4 @@
-create table ACT_HI_PROCINST (
+create table if not exists ACT_HI_PROCINST (
   ID_ varchar(64) not null,
   REV_ integer default 1,
   PROC_INST_ID_ varchar(64) not null,
