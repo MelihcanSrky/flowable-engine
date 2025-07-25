@@ -12,8 +12,8 @@ update ACT_GE_PROPERTY set VALUE_ = '6.8.0.0' where NAME_ = 'task.schema.version
 
 update ACT_GE_PROPERTY set VALUE_ = '6.8.0.0' where NAME_ = 'variable.schema.version';
 
-alter table ACT_RU_EVENT_SUBSCR add column LOCK_TIME_ timestamp;
-alter table ACT_RU_EVENT_SUBSCR add column LOCK_OWNER_ varchar(255);
+alter table ACT_RU_EVENT_SUBSCR add column if not exists LOCK_TIME_ timestamp;
+alter table ACT_RU_EVENT_SUBSCR add column if not exists LOCK_OWNER_ varchar(255);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.8.0.0' where NAME_ = 'eventsubscription.schema.version';
 create index if not exists ACT_IDX_HI_PRO_SUPER_PROCINST on ACT_HI_PROCINST(SUPER_PROCESS_INSTANCE_ID_);

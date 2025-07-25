@@ -1,30 +1,30 @@
 update ACT_GE_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'common.schema.version';
 
-alter table ACT_RU_ENTITYLINK add column ROOT_SCOPE_ID_ varchar(255);
-alter table ACT_RU_ENTITYLINK add column ROOT_SCOPE_TYPE_ varchar(255);
+alter table ACT_RU_ENTITYLINK add column if not exists ROOT_SCOPE_ID_ varchar(255);
+alter table ACT_RU_ENTITYLINK add column if not exists ROOT_SCOPE_TYPE_ varchar(255);
 create index if not exists ACT_IDX_ENT_LNK_ROOT_SCOPE on ACT_RU_ENTITYLINK(ROOT_SCOPE_ID_, ROOT_SCOPE_TYPE_, LINK_TYPE_);
 
-alter table ACT_HI_ENTITYLINK add column ROOT_SCOPE_ID_ varchar(255);
-alter table ACT_HI_ENTITYLINK add column ROOT_SCOPE_TYPE_ varchar(255);
+alter table ACT_HI_ENTITYLINK add column if not exists ROOT_SCOPE_ID_ varchar(255);
+alter table ACT_HI_ENTITYLINK add column if not exists ROOT_SCOPE_TYPE_ varchar(255);
 create index if not exists ACT_IDX_HI_ENT_LNK_ROOT_SCOPE on ACT_HI_ENTITYLINK(ROOT_SCOPE_ID_, ROOT_SCOPE_TYPE_, LINK_TYPE_);
 
-alter table ACT_RU_ENTITYLINK add column SUB_SCOPE_ID_ varchar(255);
-alter table ACT_RU_ENTITYLINK add column PARENT_ELEMENT_ID_ varchar(255);
+alter table ACT_RU_ENTITYLINK add column if not exists SUB_SCOPE_ID_ varchar(255);
+alter table ACT_RU_ENTITYLINK add column if not exists PARENT_ELEMENT_ID_ varchar(255);
 
-alter table ACT_HI_ENTITYLINK add column SUB_SCOPE_ID_ varchar(255);
-alter table ACT_HI_ENTITYLINK add column PARENT_ELEMENT_ID_ varchar(255);
+alter table ACT_HI_ENTITYLINK add column if not exists SUB_SCOPE_ID_ varchar(255);
+alter table ACT_HI_ENTITYLINK add column if not exists PARENT_ELEMENT_ID_ varchar(255);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'entitylink.schema.version';
 
 update ACT_GE_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'identitylink.schema.version';
 
-alter table ACT_RU_JOB add column CATEGORY_ varchar(255);
+alter table ACT_RU_JOB add column if not exists CATEGORY_ varchar(255);
 
-alter table ACT_RU_TIMER_JOB add column CATEGORY_ varchar(255);
+alter table ACT_RU_TIMER_JOB add column if not exists CATEGORY_ varchar(255);
 
-alter table ACT_RU_SUSPENDED_JOB add column CATEGORY_ varchar(255);
+alter table ACT_RU_SUSPENDED_JOB add column if not exists CATEGORY_ varchar(255);
 
-alter table ACT_RU_DEADLETTER_JOB add column CATEGORY_ varchar(255);
+alter table ACT_RU_DEADLETTER_JOB add column if not exists CATEGORY_ varchar(255);
 
 create table if not exists ACT_RU_EXTERNAL_JOB (
     ID_ varchar(64) NOT NULL,
@@ -77,11 +77,11 @@ create index if not exists ACT_IDX_EJOB_SCOPE on ACT_RU_EXTERNAL_JOB(SCOPE_ID_, 
 create index if not exists ACT_IDX_EJOB_SUB_SCOPE on ACT_RU_EXTERNAL_JOB(SUB_SCOPE_ID_, SCOPE_TYPE_);
 create index if not exists ACT_IDX_EJOB_SCOPE_DEF on ACT_RU_EXTERNAL_JOB(SCOPE_DEFINITION_ID_, SCOPE_TYPE_);
 
-alter table ACT_RU_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_TIMER_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_SUSPENDED_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_DEADLETTER_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_EXTERNAL_JOB add column CORRELATION_ID_ varchar(255);
+alter table ACT_RU_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_TIMER_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_SUSPENDED_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_DEADLETTER_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_EXTERNAL_JOB add column if not exists CORRELATION_ID_ varchar(255);
 
 create index if not exists ACT_IDX_JOB_CORRELATION_ID on ACT_RU_JOB(CORRELATION_ID_);
 create index if not exists ACT_IDX_TIMER_JOB_CORRELATION_ID on ACT_RU_TIMER_JOB(CORRELATION_ID_);
@@ -99,12 +99,12 @@ update ACT_GE_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'variable.schema.ver
 
 update ACT_GE_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'eventsubscription.schema.version';
 
-alter table ACT_RU_EXECUTION add column LOCK_OWNER_ varchar(255);
-alter table ACT_RU_EXECUTION add column EXTERNAL_WORKER_JOB_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists LOCK_OWNER_ varchar(255);
+alter table ACT_RU_EXECUTION add column if not exists EXTERNAL_WORKER_JOB_COUNT_ integer;
 
-alter table ACT_RU_ACTINST add column TRANSACTION_ORDER_ integer;
+alter table ACT_RU_ACTINST add column if not exists TRANSACTION_ORDER_ integer;
 
-alter table ACT_HI_ACTINST add column TRANSACTION_ORDER_ integer;
+alter table ACT_HI_ACTINST add column if not exists TRANSACTION_ORDER_ integer;
 
 update ACT_GE_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'schema.version';
 update ACT_ID_PROPERTY set VALUE_ = '6.6.0.0' where NAME_ = 'schema.version';

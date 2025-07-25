@@ -1,1 +1,1 @@
-alter table ACT_HI_TASKINST add column TASK_DEF_ID_ varchar(64);
+alter table ACT_HI_TASKINST add column if not exists TASK_DEF_ID_ varchar(64);

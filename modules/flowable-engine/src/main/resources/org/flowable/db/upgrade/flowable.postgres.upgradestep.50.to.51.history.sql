@@ -14,4 +14,4 @@ create table if not exists ACT_HI_TASKINST (
     primary key (ID_)
 );
 
-alter table ACT_HI_DETAIL add column TASK_ID_ varchar(64);
+alter table ACT_HI_DETAIL add column if not exists TASK_ID_ varchar(64);

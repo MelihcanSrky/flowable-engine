@@ -10,9 +10,9 @@ update ACT_GE_PROPERTY set VALUE_ = '7.0.0.0' where NAME_ = 'batch.schema.versio
 
 update ACT_GE_PROPERTY set VALUE_ = '7.0.0.0' where NAME_ = 'task.schema.version';
 
-alter table ACT_RU_VARIABLE add column META_INFO_ varchar(4000);
+alter table ACT_RU_VARIABLE add column if not exists META_INFO_ varchar(4000);
 
-alter table ACT_HI_VARINST add column META_INFO_ varchar(4000);
+alter table ACT_HI_VARINST add column if not exists META_INFO_ varchar(4000);
 
 update ACT_GE_PROPERTY set VALUE_ = '7.0.0.0' where NAME_ = 'variable.schema.version';
 

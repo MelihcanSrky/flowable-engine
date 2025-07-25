@@ -18,10 +18,10 @@ create index if not exists ACT_IDX_HI_PROCVAR_PROC_INST on ACT_HI_VARINST(PROC_I
 create index if not exists ACT_IDX_HI_PROCVAR_NAME_TYPE on ACT_HI_VARINST(NAME_, VAR_TYPE_);
 
 alter table ACT_HI_ACTINST
-	add column TASK_ID_ varchar(64);
+	add column if not exists TASK_ID_ varchar(64);
 
 alter table ACT_HI_ACTINST
-	add column CALL_PROC_INST_ID_ varchar(64);
+	add column if not exists CALL_PROC_INST_ID_ varchar(64);
 
 alter table ACT_HI_DETAIL
 	alter column PROC_INST_ID_ drop not null;

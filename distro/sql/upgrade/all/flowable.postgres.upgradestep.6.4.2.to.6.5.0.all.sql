@@ -2,11 +2,11 @@ update ACT_GE_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'common.schema.versi
 
 update ACT_GE_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'entitylink.schema.version';
 
-alter table ACT_HI_IDENTITYLINK add column SUB_SCOPE_ID_ varchar(255);
+alter table ACT_HI_IDENTITYLINK add column if not exists SUB_SCOPE_ID_ varchar(255);
 
 create index if not exists ACT_IDX_HI_IDENT_LNK_SUB_SCOPE on ACT_HI_IDENTITYLINK(SUB_SCOPE_ID_, SCOPE_TYPE_);
 
-alter table ACT_RU_IDENTITYLINK add column SUB_SCOPE_ID_ varchar(255);
+alter table ACT_RU_IDENTITYLINK add column if not exists SUB_SCOPE_ID_ varchar(255);
 
 create index if not exists ACT_IDX_IDENT_LNK_SUB_SCOPE on ACT_RU_IDENTITYLINK(SUB_SCOPE_ID_, SCOPE_TYPE_);
 
@@ -60,9 +60,9 @@ VALUES ('batch.schema.version', '6.5.0.6', 1)
     ON CONFLICT (NAME_) DO NOTHING;
 
 
-alter table ACT_HI_TASKINST add column PROPAGATED_STAGE_INST_ID_ varchar(255);
+alter table ACT_HI_TASKINST add column if not exists PROPAGATED_STAGE_INST_ID_ varchar(255);
 
-alter table ACT_RU_TASK add column PROPAGATED_STAGE_INST_ID_ varchar(255);
+alter table ACT_RU_TASK add column if not exists PROPAGATED_STAGE_INST_ID_ varchar(255);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'task.schema.version';
 
@@ -70,13 +70,13 @@ update ACT_GE_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'variable.schema.ver
 
 update ACT_GE_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'eventsubscription.schema.version';
 
-alter table ACT_RU_EXECUTION add column REFERENCE_ID_ varchar(255);
-alter table ACT_RU_EXECUTION add column REFERENCE_TYPE_ varchar(255);
+alter table ACT_RU_EXECUTION add column if not exists REFERENCE_ID_ varchar(255);
+alter table ACT_RU_EXECUTION add column if not exists REFERENCE_TYPE_ varchar(255);
 
-alter table ACT_RU_EXECUTION add column PROPAGATED_STAGE_INST_ID_ varchar(255);
+alter table ACT_RU_EXECUTION add column if not exists PROPAGATED_STAGE_INST_ID_ varchar(255);
 
-alter table ACT_HI_PROCINST add column REFERENCE_ID_ varchar(255);
-alter table ACT_HI_PROCINST add column REFERENCE_TYPE_ varchar(255);
+alter table ACT_HI_PROCINST add column if not exists REFERENCE_ID_ varchar(255);
+alter table ACT_HI_PROCINST add column if not exists REFERENCE_TYPE_ varchar(255);
 
 update ACT_GE_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'schema.version';
 update ACT_ID_PROPERTY set VALUE_ = '6.5.0.6' where NAME_ = 'schema.version';

@@ -221,24 +221,24 @@ WHERE (HANDLER_TYPE_ = 'activate-processdefinition'
 and LOCK_EXP_TIME_ is null;
         
 
-alter table ACT_RU_EXECUTION add column START_TIME_ timestamp;
-alter table ACT_RU_EXECUTION add column START_USER_ID_ varchar(255);
-alter table ACT_RU_TASK add column CLAIM_TIME_ timestamp;
+alter table ACT_RU_EXECUTION add column if not exists START_TIME_ timestamp;
+alter table ACT_RU_EXECUTION add column if not exists START_USER_ID_ varchar(255);
+alter table ACT_RU_TASK add column if not exists CLAIM_TIME_ timestamp;
 
-alter table ACT_RE_DEPLOYMENT add column KEY_ varchar(255);
+alter table ACT_RE_DEPLOYMENT add column if not exists KEY_ varchar(255);
 
 -- Upgrade added in upgradestep.52001.to.52002.engine, which is not applied when already on beta2 
 update ACT_RU_EVENT_SUBSCR set PROC_DEF_ID_ = CONFIGURATION_ where EVENT_TYPE_ = 'message' and PROC_INST_ID_ is null and EXECUTION_ID_ is null and PROC_DEF_ID_ is null;
 
 -- Adding count columns for execution relationship count feature
-alter table ACT_RU_EXECUTION add column IS_COUNT_ENABLED_ boolean;
-alter table ACT_RU_EXECUTION add column EVT_SUBSCR_COUNT_ integer; 
-alter table ACT_RU_EXECUTION add column TASK_COUNT_ integer; 
-alter table ACT_RU_EXECUTION add column JOB_COUNT_ integer; 
-alter table ACT_RU_EXECUTION add column TIMER_JOB_COUNT_ integer;
-alter table ACT_RU_EXECUTION add column SUSP_JOB_COUNT_ integer;
-alter table ACT_RU_EXECUTION add column DEADLETTER_JOB_COUNT_ integer;
-alter table ACT_RU_EXECUTION add column VAR_COUNT_ integer;
-alter table ACT_RU_EXECUTION add column ID_LINK_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists IS_COUNT_ENABLED_ boolean;
+alter table ACT_RU_EXECUTION add column if not exists EVT_SUBSCR_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists TASK_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists JOB_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists TIMER_JOB_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists SUSP_JOB_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists DEADLETTER_JOB_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists VAR_COUNT_ integer;
+alter table ACT_RU_EXECUTION add column if not exists ID_LINK_COUNT_ integer;
 
 update ACT_GE_PROPERTY set VALUE_ = '6.0.0.2' where NAME_ = 'schema.version';

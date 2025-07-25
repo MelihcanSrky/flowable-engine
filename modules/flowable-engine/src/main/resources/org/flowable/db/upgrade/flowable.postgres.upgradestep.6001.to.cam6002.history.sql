@@ -1,1 +1,1 @@
-alter table ACT_HI_ACTINST add column DELETE_REASON_ varchar(4000);
+alter table ACT_HI_ACTINST add column if not exists DELETE_REASON_ varchar(4000);

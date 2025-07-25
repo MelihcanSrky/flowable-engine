@@ -1,11 +1,11 @@
 alter table ACT_RU_EXECUTION 
-add column SUSPENSION_STATE_ integer;
+add column if not exists SUSPENSION_STATE_ integer;
 
 alter table ACT_RE_PROCDEF
-add column SUSPENSION_STATE_ integer;
+add column if not exists SUSPENSION_STATE_ integer;
 
 alter table ACT_RE_PROCDEF
-add column REV_ integer;
+add column if not exists REV_ integer;
 
 update ACT_RE_PROCDEF set REV_ = 1;
 update ACT_RE_PROCDEF set SUSPENSION_STATE_ = 1;
@@ -43,7 +43,7 @@ alter table ACT_RU_EVENT_SUBSCR
     
     
 alter table ACT_RU_EXECUTION 
-add column IS_EVENT_SCOPE_ boolean;
+add column if not exists IS_EVENT_SCOPE_ boolean;
 
 update ACT_RU_EXECUTION set IS_EVENT_SCOPE_ = false;
 

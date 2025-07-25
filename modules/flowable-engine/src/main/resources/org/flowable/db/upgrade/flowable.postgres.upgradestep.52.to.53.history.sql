@@ -55,6 +55,6 @@ select ID_,TYPE_,PROC_INST_ID_,EXECUTION_ID_,TASK_ID_,ACT_INST_ID_,NAME_,VAR_TYP
 
 drop table ACT_HI_DETAIL_TMP;
 
--- Add column PRIORITY_ to ACT_HI_TASKINST and set to default priority (ACT-484)
-alter table ACT_HI_TASKINST add column PRIORITY_ integer;
+-- add column if not exists PRIORITY_ to ACT_HI_TASKINST and set to default priority (ACT-484)
+alter table ACT_HI_TASKINST add column if not exists PRIORITY_ integer;
 update ACT_HI_TASKINST set PRIORITY_ = 50;

@@ -15,7 +15,7 @@ update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'task.schema.version
 update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'variable.schema.version';
 
 update ACT_GE_PROPERTY set VALUE_ = '6.7.0.0' where NAME_ = 'eventsubscription.schema.version';
-alter table ACT_HI_PROCINST add column PROPAGATED_STAGE_INST_ID_ varchar(255);
+alter table ACT_HI_PROCINST add column if not exists PROPAGATED_STAGE_INST_ID_ varchar(255);
 
 create index if not exists ACT_IDX_EXEC_REF_ID_ on ACT_RU_EXECUTION(REFERENCE_ID_);
 create index if not exists ACT_IDX_RU_ACTI_TASK on ACT_RU_ACTINST(TASK_ID_);

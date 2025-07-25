@@ -1,8 +1,8 @@
-alter table ACT_RU_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_TIMER_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_SUSPENDED_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_DEADLETTER_JOB add column CORRELATION_ID_ varchar(255);
-alter table ACT_RU_EXTERNAL_JOB add column CORRELATION_ID_ varchar(255);
+alter table ACT_RU_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_TIMER_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_SUSPENDED_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_DEADLETTER_JOB add column if not exists CORRELATION_ID_ varchar(255);
+alter table ACT_RU_EXTERNAL_JOB add column if not exists CORRELATION_ID_ varchar(255);
 
 create index if not exists ACT_IDX_JOB_CORRELATION_ID on ACT_RU_JOB(CORRELATION_ID_);
 create index if not exists ACT_IDX_TIMER_JOB_CORRELATION_ID on ACT_RU_TIMER_JOB(CORRELATION_ID_);
